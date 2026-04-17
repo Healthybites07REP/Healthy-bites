@@ -1,0 +1,549 @@
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #c9921a;
+  --gold-light: #e8b84b;
+  --gold-pale: #fdf3dc;
+  --amber: #b8730a;
+  --cream: #fdf8f0;
+  --cream2: #f9f1e0;
+  --cream3: #f2e8d0;
+  --brown: #6b3f1a;
+  --brown-light: #9a5c2e;
+  --green: #2d5a27;
+  --green-light: #4a7c43;
+  --text: #2a1f0e;
+  --muted: #7a6040;
+  --border: rgba(180,130,60,0.22);
+  --surface: rgba(255,252,245,0.95);
+}
+
+body { font-family: Georgia, 'Times New Roman', serif; background: var(--cream); color: var(--text); }
+.site { overflow: hidden; border-radius: 14px; }
+
+/* NAV */
+nav {
+  background: rgba(253,248,240,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 64px;
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-logo {
+  font-size: 22px; font-weight: 700; color: var(--brown);
+  letter-spacing: 0.5px; font-family: Georgia, serif;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  color: var(--muted); font-size: 13px; text-decoration: none;
+  cursor: pointer; letter-spacing: 0.8px; font-family: 'Arial', sans-serif;
+  text-transform: uppercase; font-weight: 600;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  background: var(--gold); color: #fff; border: none; border-radius: 30px;
+  padding: 9px 22px; font-size: 12px; cursor: pointer;
+  font-family: Arial, sans-serif; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--amber); }
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── HERO ── */
+.hero {
+  position: relative; min-height: 560px;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center;
+  padding: 5rem 2rem 4rem; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url('https://m.media-amazon.com/images/I/81p5lh5GVML._SX679_.jpg');
+  background-size: cover; background-position: center;
+  filter: brightness(0.38) saturate(0.7);
+}
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(160deg,
+    rgba(180,110,20,0.55) 0%,
+    rgba(20,12,4,0.72) 50%,
+    rgba(30,50,20,0.60) 100%);
+}
+.hero-content { position: relative; z-index: 2; }
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,220,100,0.15);
+  border: 1px solid rgba(255,210,80,0.45);
+  color: var(--gold-light);
+  font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+  padding: 6px 18px; border-radius: 30px; margin-bottom: 1.5rem;
+  font-family: Arial, sans-serif; font-weight: 700;
+}
+.hero h1 {
+  font-size: 50px; font-weight: 700; line-height: 1.1;
+  margin-bottom: 1.1rem; color: #fff;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+.hero h1 span { color: var(--gold-light); }
+.hero-tag {
+  font-size: 13px; color: var(--gold-light);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  font-family: Arial, sans-serif; font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+.hero p {
+  color: rgba(255,245,220,0.85); font-size: 16px;
+  max-width: 500px; line-height: 1.8; margin: 0 auto 2.2rem;
+}
+.hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-gold {
+  background: var(--gold); color: #fff; border: none; border-radius: 30px;
+  padding: 13px 32px; font-size: 13px; cursor: pointer;
+  font-family: Arial, sans-serif; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.btn-ghost {
+  background: transparent; color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.45); border-radius: 30px;
+  padding: 13px 32px; font-size: 13px; cursor: pointer;
+  font-family: Arial, sans-serif; font-weight: 600; letter-spacing: 1px;
+}
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--brown);
+  display: flex; justify-content: center; gap: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+.stat-item {
+  padding: 1.1rem 2.5rem; text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.12);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num { font-size: 22px; font-weight: 700; color: var(--gold-light); font-family: Georgia, serif; }
+.stat-lbl { font-size: 10px; color: rgba(255,240,200,0.7); letter-spacing: 1px; text-transform: uppercase; font-family: Arial, sans-serif; margin-top: 2px; }
+
+/* FEATURE STRIP */
+.feat-strip {
+  background: var(--cream2);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+.feat-item {
+  padding: 1.4rem 1.2rem; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.feat-item:last-child { border-right: none; }
+.feat-icon { font-size: 22px; margin-bottom: 6px; }
+.feat-title { font-size: 12px; font-weight: 700; color: var(--brown); font-family: Arial, sans-serif; letter-spacing: 0.5px; margin-bottom: 3px; }
+.feat-sub { font-size: 11px; color: var(--muted); font-family: Arial, sans-serif; line-height: 1.4; }
+
+/* WHY SECTION */
+.why-section {
+  background: var(--cream); padding: 3.5rem 2.5rem;
+  text-align: center; border-bottom: 1px solid var(--border);
+}
+.sec-eyebrow { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); font-family: Arial, sans-serif; font-weight: 700; margin-bottom: 0.5rem; }
+.sec-title { font-size: 30px; font-weight: 700; color: var(--brown); margin-bottom: 0.5rem; }
+.sec-sub { font-size: 14px; color: var(--muted); font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.why-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1.25rem; max-width: 860px; margin: 0 auto; }
+.why-card {
+  background: var(--gold-pale); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.6rem 1.2rem; text-align: center;
+}
+.why-icon { font-size: 30px; margin-bottom: 10px; }
+.why-title { font-size: 14px; font-weight: 700; color: var(--brown); margin-bottom: 6px; font-family: Arial, sans-serif; }
+.why-desc { font-size: 12px; color: var(--muted); line-height: 1.6; font-family: Arial, sans-serif; }
+
+/* PRODUCTS */
+.products-section { padding: 3.5rem 2.5rem; background: var(--cream2); }
+.prod-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.5rem; max-width: 860px; margin: 0 auto; }
+.prod-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+  display: flex; flex-direction: column;
+}
+.prod-card:hover { transform: translateY(-3px); border-color: var(--gold); }
+.prod-img-wrap {
+  height: 160px; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #f5e8c8 0%, #eedcaa 100%);
+  position: relative; overflow: hidden;
+}
+.prod-emoji { font-size: 64px; }
+.prod-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--gold); color: #fff;
+  font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 4px 10px; border-radius: 20px;
+  font-family: Arial, sans-serif; text-transform: uppercase;
+}
+.prod-body { padding: 1.25rem 1.4rem 1.4rem; flex: 1; display: flex; flex-direction: column; }
+.prod-name { font-size: 16px; font-weight: 700; color: var(--brown); margin-bottom: 5px; }
+.prod-ingr { font-size: 11px; color: var(--gold); font-family: Arial, sans-serif; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 8px; text-transform: uppercase; }
+.prod-desc { font-size: 12px; color: var(--muted); font-family: Arial, sans-serif; line-height: 1.6; flex: 1; margin-bottom: 1rem; }
+.prod-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 1rem; }
+.prod-tag {
+  background: var(--gold-pale); color: var(--amber);
+  font-size: 10px; padding: 3px 9px; border-radius: 12px;
+  font-family: Arial, sans-serif; font-weight: 600; border: 1px solid rgba(180,120,20,0.2);
+}
+.prod-footer { display: flex; align-items: center; justify-content: space-between; }
+.prod-price { font-size: 20px; font-weight: 700; color: var(--green); font-family: Georgia, serif; }
+.prod-price span { font-size: 12px; color: var(--muted); font-weight: 400; font-family: Arial, sans-serif; }
+.prod-btn {
+  background: var(--gold); color: #fff; border: none; border-radius: 24px;
+  padding: 9px 20px; font-size: 12px; font-weight: 700; cursor: pointer;
+  font-family: Arial, sans-serif; letter-spacing: 0.5px;
+}
+.prod-btn:hover { background: var(--amber); }
+
+/* ABOUT */
+.about-section {
+  padding: 3.5rem 2.5rem; background: var(--cream);
+  border-top: 1px solid var(--border);
+}
+.about-inner { display: grid; grid-template-columns: 1fr 1.3fr; gap: 3rem; align-items: center; max-width: 860px; margin: 0 auto; }
+.about-card {
+  background: var(--gold-pale); border: 1px solid var(--border);
+  border-radius: 18px; padding: 2.5rem 2rem; text-align: center;
+}
+.about-av {
+  width: 76px; height: 76px; border-radius: 50%;
+  background: var(--brown); border: 3px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px; font-weight: 700; color: var(--gold-light);
+  margin: 0 auto 0.75rem; font-family: Georgia, serif;
+}
+.about-name { font-size: 19px; font-weight: 700; color: var(--brown); margin-bottom: 3px; }
+.about-role { font-size: 11px; color: var(--gold); font-family: Arial, sans-serif; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; }
+.about-quote {
+  font-size: 13px; color: var(--muted); font-style: italic;
+  line-height: 1.8; border-left: 3px solid var(--gold);
+  padding-left: 12px; text-align: left;
+}
+.about-text {}
+.about-text h2 { font-size: 28px; font-weight: 700; color: var(--brown); margin-bottom: 1rem; line-height: 1.2; }
+.about-text h2 em { color: var(--gold); font-style: normal; }
+.about-text p { font-size: 13px; color: var(--muted); font-family: Arial, sans-serif; line-height: 1.8; margin-bottom: 0.9rem; }
+.val-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
+.val-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text); font-family: Arial, sans-serif; }
+.val-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+/* CONTACT */
+.contact-section {
+  padding: 3.5rem 2.5rem; background: var(--cream2);
+  border-top: 1px solid var(--border);
+}
+.contact-inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; max-width: 860px; margin: 0 auto; align-items: start; }
+.contact-info h2 { font-size: 28px; font-weight: 700; color: var(--brown); margin-bottom: 0.8rem; }
+.contact-info h2 em { color: var(--gold); font-style: normal; }
+.contact-info p { font-size: 13px; color: var(--muted); font-family: Arial, sans-serif; line-height: 1.8; margin-bottom: 1.5rem; }
+.cdet { display: flex; align-items: center; gap: 12px; margin-bottom: 0.85rem; }
+.cdet-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--gold-pale); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.cdet-text { font-size: 13px; color: var(--muted); font-family: Arial, sans-serif; }
+.cform {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem;
+}
+.flabel { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; font-family: Arial, sans-serif; font-weight: 700; display: block; margin-bottom: 5px; }
+.finput {
+  width: 100%; background: var(--cream3); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); padding: 10px 14px;
+  font-size: 13px; font-family: Arial, sans-serif; outline: none;
+}
+.finput:focus { border-color: var(--gold); }
+textarea.finput { resize: none; height: 88px; }
+.fsub {
+  background: var(--gold); color: #fff; border: none; border-radius: 30px;
+  padding: 12px; font-size: 13px; font-weight: 700; cursor: pointer;
+  font-family: Arial, sans-serif; letter-spacing: 0.5px;
+}
+
+/* FOOTER */
+footer {
+  background: var(--brown);
+  padding: 1.4rem 2.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.flogo { font-size: 16px; font-weight: 700; color: var(--gold-light); font-family: Georgia, serif; }
+.fcopy { font-size: 11px; color: rgba(255,240,200,0.6); font-family: Arial, sans-serif; }
+</style>
+
+<div class="site">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Healthy <span>Bites</span></div>
+    <div class="nav-links">
+      <a onclick="show('home')">Home</a>
+      <a onclick="show('products')">Products</a>
+      <a onclick="show('about')">About</a>
+      <a onclick="show('contact')">Contact</a>
+    </div>
+    <button class="nav-cta" onclick="show('products')">Shop Now</button>
+  </nav>
+
+  <!-- HOME -->
+  <div class="section active" id="home">
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge">100% Natural &nbsp;·&nbsp; Zero Added Sugar &nbsp;·&nbsp; Handcrafted</div>
+        <div class="hero-tag">Pure Nature, Powerful You</div>
+        <h1>Every Bite,<br><span>Nature's Finest</span></h1>
+        <p>Premium dry fruit bites made from the richest almonds, cashews, dates & more. No sugar added. No shortcuts. Just pure, powerful nourishment.</p>
+        <div class="hero-btns">
+          <button class="btn-gold" onclick="show('products')">Explore Our Bites</button>
+          <button class="btn-ghost" onclick="show('about')">Our Story</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">All Natural</div></div>
+      <div class="stat-item"><div class="stat-num">0g</div><div class="stat-lbl">Added Sugar</div></div>
+      <div class="stat-item"><div class="stat-num">4</div><div class="stat-lbl">Premium Blends</div></div>
+      <div class="stat-item"><div class="stat-num">5K+</div><div class="stat-lbl">Happy Customers</div></div>
+    </div>
+
+    <div class="feat-strip">
+      <div class="feat-item">
+        <div class="feat-icon">🌿</div>
+        <div class="feat-title">All Natural</div>
+        <div class="feat-sub">No preservatives, no additives, ever</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">🍯</div>
+        <div class="feat-title">Zero Added Sugar</div>
+        <div class="feat-sub">Sweetness only from dry fruits</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">⚡</div>
+        <div class="feat-title">High Energy</div>
+        <div class="feat-sub">Nutrient-dense, fuel for your day</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">📦</div>
+        <div class="feat-title">Fresh Sealed</div>
+        <div class="feat-sub">Delivered fresh to your door</div>
+      </div>
+    </div>
+
+    <div class="why-section">
+      <div class="sec-eyebrow">Why Healthy Bites</div>
+      <div class="sec-title">Nature's Power, Premium Quality</div>
+      <div class="sec-sub">We believe what you eat shapes who you are. That's why every ingredient is chosen with purpose.</div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🥜</div>
+          <div class="why-title">Finest Dry Fruits</div>
+          <div class="why-desc">Sourced from the best farms — almonds, cashews, dates, and more selected for quality and freshness.</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🔬</div>
+          <div class="why-title">Science-Backed Nutrition</div>
+          <div class="why-desc">Each blend is crafted to maximise protein, antioxidants, and natural energy in every bite.</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">♻️</div>
+          <div class="why-title">Responsible Sourcing</div>
+          <div class="why-desc">Ethical, sustainable ingredient sourcing — good for you and good for the planet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="section" id="products">
+    <div class="products-section">
+      <div style="text-align:center; margin-bottom:2.5rem;">
+        <div class="sec-eyebrow">Our Collection</div>
+        <div class="sec-title">Four Premium Bites</div>
+        <div class="sec-sub">Handcrafted in small batches. Zero added sugar. All natural.</div>
+      </div>
+      <div class="prod-grid">
+
+        <!-- 1: Classic Mix -->
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <div class="prod-emoji">🥜</div>
+            <div class="prod-badge">⭐ Best Seller</div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-name">Classic Mix Bites</div>
+            <div class="prod-ingr">Almonds · Cashews · Pumpkin Seeds · Peanuts · Dates</div>
+            <div class="prod-desc">Our signature blend — five of nature's finest packed into one energy-dense bite. The perfect everyday snack for sustained energy and nourishment.</div>
+            <div class="prod-tags">
+              <span class="prod-tag">Energy Boost</span>
+              <span class="prod-tag">High Fibre</span>
+              <span class="prod-tag">No Sugar</span>
+            </div>
+            <div class="prod-footer">
+              <div class="prod-price">₹40 <span>/ bar</span></div>
+              <button class="prod-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2: Antioxidant Rich -->
+        <div class="prod-card">
+          <div class="prod-img-wrap" style="background: linear-gradient(135deg,#f0e0f0 0%,#dcc8e8 100%);">
+            <div class="prod-emoji">🫐</div>
+            <div class="prod-badge" style="background:var(--green);">Antioxidant Rich</div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-name">Berry Dry Fruit Bites</div>
+            <div class="prod-ingr">Cranberries · Pistachios · Almonds · Cashews · Black Raisins</div>
+            <div class="prod-desc">A vibrant mix of berries and premium nuts loaded with antioxidants to fight free radicals, boost immunity, and glow from within.</div>
+            <div class="prod-tags">
+              <span class="prod-tag">Antioxidant</span>
+              <span class="prod-tag">Immunity Boost</span>
+              <span class="prod-tag">Glow Skin</span>
+            </div>
+            <div class="prod-footer">
+              <div class="prod-price">₹60 <span>/ bar</span></div>
+              <button class="prod-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3: High Protein -->
+        <div class="prod-card">
+          <div class="prod-img-wrap" style="background: linear-gradient(135deg,#fff4d6 0%,#f5e0a0 100%);">
+            <div class="prod-emoji">💪</div>
+            <div class="prod-badge" style="background:var(--brown);">High Protein</div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-name">Power Almond Bites</div>
+            <div class="prod-ingr">Almonds · Saffron · Concentrated Protein</div>
+            <div class="prod-desc">Pure almonds touched with saffron and enriched with concentrated protein — crafted for athletes, fitness lovers, and anyone who demands more from their snack.</div>
+            <div class="prod-tags">
+              <span class="prod-tag">High Protein</span>
+              <span class="prod-tag">Muscle Recovery</span>
+              <span class="prod-tag">Saffron Infused</span>
+            </div>
+            <div class="prod-footer">
+              <div class="prod-price">₹69 <span>/ bar</span></div>
+              <button class="prod-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4: Gift Box -->
+        <div class="prod-card" style="border: 2px solid var(--gold);">
+          <div class="prod-img-wrap" style="background: linear-gradient(135deg,#fdf0cc 0%,#f5d98a 100%);">
+            <div class="prod-emoji">🎁</div>
+            <div class="prod-badge" style="background:var(--brown);">Gift Ready</div>
+          </div>
+          <div class="prod-body">
+            <div class="prod-name">Premium Gift Box</div>
+            <div class="prod-ingr">Classic Mix + Berry Bites + Power Almond</div>
+            <div class="prod-desc">The perfect present — all three of our premium bars beautifully curated in one luxurious gift box. Ideal for loved ones who deserve only the finest.</div>
+            <div class="prod-tags">
+              <span class="prod-tag">All 3 Bars</span>
+              <span class="prod-tag">Gift Wrapped</span>
+              <span class="prod-tag">Premium Box</span>
+            </div>
+            <div class="prod-footer">
+              <div class="prod-price">₹149 <span>/ box</span></div>
+              <button class="prod-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section" id="about">
+    <div class="about-section">
+      <div style="text-align:center;margin-bottom:2.5rem;">
+        <div class="sec-eyebrow">Our Story</div>
+        <div class="sec-title">From Nature, With Love</div>
+      </div>
+      <div class="about-inner">
+        <div class="about-card">
+          <div class="about-av">A</div>
+          <div class="about-name">Aman</div>
+          <div class="about-role">Founder, Healthy Bites</div>
+          <div class="about-quote" style="margin-top:1rem;">"I started Healthy Bites because I couldn't find a snack that was truly natural, delicious, and guilt-free. So I made one."</div>
+        </div>
+        <div class="about-text">
+          <h2>Real Food,<br><em>Real Energy</em></h2>
+          <p>Healthy Bites was born from a simple belief — you shouldn't have to choose between taste and health. Every bite we make is crafted from 100% natural dry fruits with zero added sugar, zero preservatives, and zero compromise.</p>
+          <p>We source the finest almonds, cashews, walnuts, dates, cranberries, and saffron to create bites that fuel your body the way nature intended — powerfully, purely, and beautifully.</p>
+          <div class="val-list">
+            <div class="val-row"><div class="val-dot"></div>100% natural ingredients, always</div>
+            <div class="val-row"><div class="val-dot"></div>Zero added sugar, zero guilt</div>
+            <div class="val-row"><div class="val-dot"></div>Small batch, handcrafted quality</div>
+            <div class="val-row"><div class="val-dot"></div>Sustainable and responsible sourcing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section" id="contact">
+    <div class="contact-section">
+      <div style="text-align:center;margin-bottom:2.5rem;">
+        <div class="sec-eyebrow">Reach Out</div>
+        <div class="sec-title">Get in Touch</div>
+      </div>
+      <div class="contact-inner">
+        <div class="contact-info">
+          <h2>Let's <em>Connect</em></h2>
+          <p>Have a question about our products, want to place a bulk order, or just want to say hello? We'd love to hear from you.</p>
+          <div class="cdet"><div class="cdet-icon">📧</div><div class="cdet-text">hello@healthybites.in</div></div>
+          <div class="cdet"><div class="cdet-icon">📞</div><div class="cdet-text">+91 98765 43210</div></div>
+          <div class="cdet"><div class="cdet-icon">📍</div><div class="cdet-text">Agra, Uttar Pradesh, India</div></div>
+          <div class="cdet"><div class="cdet-icon">🕐</div><div class="cdet-text">Mon – Sat, 10am – 6pm IST</div></div>
+        </div>
+        <div class="cform">
+          <div class="form-group">
+            <label class="flabel">Your Name</label>
+            <input class="finput" type="text" placeholder="e.g. Priya Sharma" />
+          </div>
+          <div class="form-group">
+            <label class="flabel">Email Address</label>
+            <input class="finput" type="email" placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label class="flabel">Message</label>
+            <textarea class="finput" placeholder="Tell us what you need..."></textarea>
+          </div>
+          <button class="fsub">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="flogo">Healthy Bites</div>
+    <div class="fcopy">© 2026 Healthy Bites · Pure Nature, Powerful You · Made in Agra 🇮🇳</div>
+    <div class="fcopy">All natural, always.</div>
+  </footer>
+
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+</script>
